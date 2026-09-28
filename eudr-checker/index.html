@@ -1,44 +1,122 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EUDR Product Checker | EUDRSearch</title><meta name="description" content="Free EUDR product scope checker. Search by product, commodity or CN/HS heading and identify the next scope-verification step."><link rel="canonical" href="https://eudrsearch.com/eudr-checker/">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css"></head><body><header class="site-header">
-<a class="brand" href="/" aria-label="EUDR Search home"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a>
-<nav><a href="/eudr-checker/">Checker</a><a href="/cn-code/">CN/HS</a><a href="/country-risk/">Country risk</a><a href="/due-diligence/">Due diligence</a><a href="/guides/eudr-requirements.html">Guides</a></nav>
-<a class="btn btn-small" href="/eudr-checker/">Check a product</a>
-</header><main>
-<section class="page-hero"><span class="kicker">Free EUDR tool</span><h1>EUDR Product Checker</h1><p class="hero-copy">Screen a product by name, commodity or common CN/HS heading before you move into full due diligence.</p></section><section class="section narrow-top"><div class="checker"><div class="search-row"><input id="fullQ" placeholder="e.g. chocolate, 1806, timber, 4001, palm oil"><button id="fullSearch" class="btn">Check scope</button></div><div id="fullResult" class="lookup-results"><div class="notice"><strong>What this tool does</strong><p>It gives an initial scope signal. The legally decisive step is checking the exact product against the current Annex I.</p></div></div></div>
-<div class="content-grid"><article class="content-card"><h2>1. Identify the exact product</h2><p>Use the commercial description together with the customs classification. Similar products can have different EUDR treatment depending on their CN code and material composition.</p></article><article class="content-card"><h2>2. Confirm the commodity family</h2><p>EUDR covers cattle, cocoa, coffee, oil palm, rubber, soya and wood, plus specified derived products.</p></article><article class="content-card"><h2>3. Check timing</h2><p>The main application dates are 30 December 2026 and 30 June 2027, with separate timing for products newly added to scope in 2026.</p></article></div></section></main><footer>
-<div><a class="brand" href="/"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a><p>Independent EUDR research and compliance tools.</p></div>
-<div><strong>Tools</strong><a href="/eudr-checker/">Product checker</a><a href="/cn-code/">CN / HS search</a><a href="/country-risk/">Country risk</a><a href="/deadlines/">Deadlines</a></div>
-<div><strong>Compliance</strong><a href="/due-diligence/">Due diligence</a><a href="/geolocation/">Geolocation</a><a href="/dds/">DDS guide</a><a href="/guides/eudr-requirements.html">Requirements guide</a></div>
-<div><strong>Legal</strong><p>Informational only. Verify current EU legislation and official guidance before relying on a result.</p></div>
-</footer><script>
-const rows=[
-["cattle","Cattle","Potential EUDR scope. Confirm the exact CN code in Annex I."],
-["beef","Cattle","Potential EUDR scope. Confirm the exact CN code in Annex I."],
-["cocoa","Cocoa","Cocoa and listed cocoa derivatives are core EUDR products."],
-["chocolate","Cocoa","Chocolate under heading 1806 is an EUDR product category."],
-["coffee","Coffee","Coffee products can fall within EUDR scope. Check the current Annex I."],
-["palm","Oil palm","Palm oil and listed derivatives can fall within EUDR scope."],
-["rubber","Rubber","Natural rubber and listed derivatives can fall within EUDR scope."],
-["soya","Soya","Soya and listed derivatives can fall within EUDR scope."],
-["soy","Soya","Soya and listed derivatives can fall within EUDR scope."],
-["wood","Wood","Wood and many listed derived products can fall within EUDR scope."],
-["timber","Wood","Wood and many listed derived products can fall within EUDR scope."],
-["furniture","Wood","Some wooden furniture categories fall within EUDR scope. Confirm the CN code."],
-["1806","Cocoa","CN 1806 covers chocolate and other food preparations containing cocoa."],
-["0901","Coffee","CN 0901 covers coffee, whether or not roasted or decaffeinated, and related products."],
-["1201","Soya","CN 1201 concerns soya beans; verify the latest Annex I wording and exclusions."],
-["1507","Soya","CN 1507 concerns soya-bean oil and its fractions."],
-["1511","Oil palm","CN 1511 concerns palm oil and its fractions."],
-["4001","Rubber","CN 4001 concerns natural rubber in primary forms or plates, sheets or strip."],
-["4403","Wood","CN 4403 concerns wood in the rough."],
-["4407","Wood","CN 4407 concerns wood sawn or chipped lengthwise above specified thickness."],
-["9403","Wood","Some wooden furniture under 9403 is covered; verify the exact subheading."]
+<title>EUDR Combined Checker — Product, Country & Company Size | EUDRSearch</title>
+<meta name="description" content="Free EUDR combined checker: screen a product or CN/HS code, country risk, company size, application date and due-diligence route in one workflow.">
+<link rel="canonical" href="https://eudrsearch.com/eudr-checker/"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/styles.css"></head><body>
+<header class="site-header"><a class="brand" href="/"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a>
+<nav><a href="/eudr-checker/">Checker</a><a href="/products/">Products</a><a href="/cn-code/">CN/HS</a><a href="/country-risk/">Country Risk</a><a href="/countries/">Countries</a></nav>
+<a class="btn btn-small" href="#combined">Run check</a></header>
+<main>
+<section class="page-hero"><span class="kicker">Free EUDR tool · 2026 rules</span><h1>EUDR Combined Checker</h1>
+<p class="hero-copy">Check product scope, origin-country risk, company-size timing and the likely due-diligence route in one place.</p></section>
+
+<section id="combined" class="section narrow-top">
+<div class="checker checker-pro">
+  <div class="form-grid">
+    <label><span>Product, CN or HS code</span><input id="productQ" placeholder="e.g. chocolate, 1806, 0901, soluble coffee"></label>
+    <label><span>Country of production</span><input id="countryQ" list="countryHints" placeholder="e.g. China, Brazil, Vietnam"></label>
+    <label><span>Company / operator size</span><select id="companySize">
+      <option value="large">Large or medium operator</option>
+      <option value="small">Micro or small operator</option>
+      <option value="small-eutr">Micro or small operator already covered by EUTR</option>
+    </select></label>
+    <label><span>Supply-chain role</span><select id="role">
+      <option value="operator">Operator / importer / exporter</option>
+      <option value="trader">Trader / downstream business</option>
+      <option value="unknown">Not sure</option>
+    </select></label>
+  </div>
+  <datalist id="countryHints">
+    <option>China</option><option>Vietnam</option><option>Brazil</option><option>Indonesia</option><option>Malaysia</option><option>Thailand</option><option>India</option><option>United States</option><option>Ghana</option><option>Côte d’Ivoire</option><option>Russia</option><option>Myanmar</option><option>Belarus</option><option>Germany</option><option>France</option>
+  </datalist>
+  <button id="combinedBtn" class="btn checker-submit">Check EUDR status</button>
+  <p class="form-note">Screening only. Final scope depends on the exact current Annex I CN entry, product composition, origin facts and your legal role.</p>
+</div>
+
+<div id="combinedResult" class="combined-result hidden"></div>
+
+<div class="content-grid">
+  <article class="content-card"><h2>Product scope</h2><p>Matches common EUDR commodities, products and CN/HS references, including selected 2026 additions and removals.</p></article>
+  <article class="content-card"><h2>Country benchmarking</h2><p>Applies the current low / standard / high-risk structure. Countries not listed low or high remain standard risk.</p></article>
+  <article class="content-card"><h2>Application date</h2><p>Uses 30 Dec 2026 / 30 Jun 2027 timing, with 30 Dec 2027 for products newly added by the 2026 scope update.</p></article>
+</div>
+
+<div class="notice"><strong>How to read the result</strong><p>Low-risk sourcing can qualify for simplified due diligence under Article 13 if the conditions are met, but information collection still applies. Standard/high-risk sourcing normally requires the full risk-assessment workflow, and high-risk origins receive enhanced authority scrutiny.</p></div>
+</section>
+</main>
+
+<footer><div><a class="brand" href="/"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a><p>Independent EUDR research and compliance tools.</p></div>
+<div><strong>Tools</strong><a href="/eudr-checker/">Combined checker</a><a href="/cn-code/">CN / HS search</a><a href="/country-risk/">Country risk</a><a href="/deadlines/">Deadlines</a></div>
+<div><strong>Compliance</strong><a href="/due-diligence/">Due diligence</a><a href="/geolocation/">Geolocation</a><a href="/dds/">DDS guide</a><a href="/faq/">FAQ</a></div>
+<div><strong>Legal</strong><p>Informational screening only. Verify current EU legislation, official guidance and transaction-specific facts.</p></div></footer>
+
+<script>
+const lowCountries=["Afghanistan","Albania","Algeria","Andorra","Antigua and Barbuda","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belgium","Bhutan","Bosnia and Herzegovina","Brunei Darussalam","Bulgaria","Burundi","Cabo Verde","Canada","Central African Republic","Chile","China","Comoros","Congo","Costa Rica","Croatia","Cuba","Cyprus","Czechia","Denmark","Djibouti","Dominica","Dominican Republic","Egypt","Estonia","Eswatini","Fiji","Finland","France","Gabon","Georgia","Germany","Ghana","Greece","Grenada","Guyana","Hungary","Iceland","India","Iran","Iraq","Ireland","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Maldives","Mali","Malta","Marshall Islands","Mauritius","Micronesia","Monaco","Mongolia","Montenegro","Morocco","Nauru","Nepal","Netherlands","New Zealand","North Macedonia","Norway","Oman","Palau","Palestine","Papua New Guinea","Philippines","Poland","Portugal","Qatar","Republic of Korea","Moldova","Romania","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","São Tomé and Príncipe","Saudi Arabia","Serbia","Seychelles","Singapore","Slovakia","Slovenia","Solomon Islands","South Africa","South Sudan","Spain","Sri Lanka","Suriname","Sweden","Switzerland","Syria","Tajikistan","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Türkiye","Turkmenistan","Tuvalu","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vietnam","Yemen"].map(v=>v.toLowerCase());
+const highCountries=["Belarus","Democratic People's Republic of Korea","North Korea","Myanmar","Russian Federation","Russia"].map(v=>v.toLowerCase());
+const aliases={"viet nam":"vietnam","usa":"united states","u.s.":"united states","uk":"united kingdom","south korea":"republic of korea","dprk":"north korea","russian federation":"russia","lao pdr":"laos","ivory coast":"côte d’ivoire","cote d'ivoire":"côte d’ivoire","cote divoire":"côte d’ivoire"};
+function norm(v){v=(v||"").trim().toLowerCase();return aliases[v]||v}
+function countryRisk(raw){
+ const v=norm(raw);
+ if(!v) return {key:"unknown",label:"Country needed",text:"Enter the country of production to calculate the benchmarking route."};
+ if(highCountries.includes(v)) return {key:"high",label:"High risk",text:"The country appears on the current EU high-risk list."};
+ if(lowCountries.includes(v)) return {key:"low",label:"Low risk",text:"The country appears on the current EU low-risk list."};
+ return {key:"standard",label:"Standard risk",text:"This country is not on the current low/high lists, so standard risk applies if the country name is entered correctly."};
+}
+const products=[
+ {keys:["soluble coffee","instant coffee","210111","2101 11"],family:"Coffee",state:"added",title:"Newly added product",text:"Soluble coffee was added by the 2026 scope update and becomes subject to EUDR from 30 December 2027."},
+ {keys:["frozen cattle tongue","frozen beef tongue"],family:"Cattle",state:"added",title:"Newly added product",text:"Frozen cattle tongues were added by the 2026 scope update and become subject to EUDR from 30 December 2027."},
+ {keys:["cattle leather","beef leather","cattle hide","cattle hides","cattle skin","cattle skins","4101","4104","4107"],family:"Cattle",state:"removed",title:"Removed from scope",text:"Cattle hides, skins and leather were removed by the 2026 product-scope update. Verify the exact current CN entry."},
+ {keys:["retreaded tyre","retreaded tire","re-treaded tyre","re-treaded tire"],family:"Rubber",state:"removed",title:"Removed from scope",text:"Re-treaded tyres were removed by the 2026 product-scope update."},
+ {keys:["vulcanised rubber","vulcanized rubber","conveyor belt","transmission belt"],family:"Rubber",state:"removed",title:"Removed category",text:"Selected vulcanised-rubber articles and conveyor/transmission belts were removed by the 2026 scope update. Exact classification still matters."},
+ {keys:["soybeans for sowing","soya beans for sowing","soybean for sowing","soya for sowing"],family:"Soya",state:"removed",title:"Removed from scope",text:"Soybeans for sowing were removed by the 2026 product-scope update."},
+ {keys:["chocolate","1806","cocoa","cacao","1801","1803","1804","1805"],family:"Cocoa",state:"likely",title:"Potential EUDR match",text:"Cocoa and listed cocoa-derived products are core EUDR product groups."},
+ {keys:["coffee","0901"],family:"Coffee",state:"likely",title:"Potential EUDR match",text:"Coffee under the relevant current Annex I entries can fall within EUDR scope."},
+ {keys:["palm oil","1511","oil palm"],family:"Oil palm",state:"likely",title:"Potential EUDR match",text:"Palm oil and listed palm-derived products can fall within EUDR scope."},
+ {keys:["natural rubber","4001","rubber"],family:"Rubber",state:"likely",title:"Potential EUDR match",text:"Natural rubber and listed derived products can fall within EUDR scope."},
+ {keys:["soya","soy","soybean","1201","1507"],family:"Soya",state:"likely",title:"Potential EUDR match",text:"Soya and listed derivatives can fall within EUDR scope."},
+ {keys:["wood furniture","furniture","9403","timber","wood","4403","4407","4418","paper"],family:"Wood",state:"likely",title:"Potential EUDR match",text:"Wood and many listed wood-derived products can fall within EUDR scope."},
+ {keys:["cattle","beef","0102","0201","0202"],family:"Cattle",state:"likely",title:"Potential EUDR match",text:"Cattle and selected derived products can fall within EUDR scope."}
 ];
-const q=document.querySelector("#fullQ"),out=document.querySelector("#fullResult");
-function run(){const t=q.value.trim().toLowerCase();if(!t){out.innerHTML="<strong>Enter a product or code.</strong>";return}
-const hits=rows.filter(r=>t.includes(r[0])||r[0].includes(t));
-if(!hits.length){out.innerHTML="<strong>No quick match.</strong><p>No quick match does not prove the product is outside EUDR. Check the exact current Annex I CN entry.</p>";return}
-out.innerHTML=hits.slice(0,6).map(r=>'<div class="lookup-row"><span class="badge badge-low">'+r[1]+'</span><div><strong>'+r[0].toUpperCase()+'</strong><p>'+r[2]+'</p></div></div>').join("")}
-document.querySelector("#fullSearch").onclick=run;q.addEventListener("keydown",e=>{if(e.key==="Enter")run()});
+function productMatch(raw){
+ const t=(raw||"").trim().toLowerCase();
+ if(!t) return {state:"unknown",family:"—",title:"Product needed",text:"Enter a product name or CN/HS code."};
+ for(const p of products){if(p.keys.some(k=>t.includes(k)))return p}
+ if(t.includes("palm")&&t.includes("derivative")) return {state:"review",family:"Oil palm",title:"Exact code required",text:"Certain palm-oil derivatives were newly added in 2026 and apply from 30 December 2027; others may already be covered. Verify the exact CN code."};
+ return {state:"unknown",family:"Unknown",title:"No quick match",text:"No quick match does not prove the product is outside EUDR. Verify the exact current Annex I CN entry."};
+}
+function deadline(size,state){
+ if(state==="added") return {date:"30 Dec 2027",text:"Special application date for products newly added by the 2026 product-scope update."};
+ if(state==="removed") return {date:"No main EUDR date",text:"This matched a category removed in the 2026 update; verify the exact current classification."};
+ if(size==="small") return {date:"30 Jun 2027",text:"Current application date for other micro and small operators."};
+ return {date:"30 Dec 2026",text:size==="small-eutr"?"Current application date for micro/small operators already covered by the former EUTR.":"Current application date for large and medium operators."};
+}
+function dueRoute(risk,state){
+ if(state==="removed") return {title:"Verify current scope first",text:"The product matched a removed category. Confirm the exact CN code before building an EUDR due-diligence file."};
+ if(state==="unknown"||state==="review") return {title:"Scope verification first",text:"Confirm Annex I coverage before deciding the due-diligence route."};
+ if(risk.key==="low") return {title:"Simplified due diligence may apply",text:"Article 13 may remove the Article 10/11 risk-assessment and mitigation steps when its conditions are met. Article 9 information collection still applies, and known compliance/circumvention risks can trigger the full process."};
+ if(risk.key==="high") return {title:"Full due diligence + enhanced scrutiny",text:"Prepare information collection, risk assessment and mitigation as needed. High-risk origins are subject to enhanced competent-authority scrutiny."};
+ if(risk.key==="standard") return {title:"Full due diligence route",text:"Prepare information collection, risk assessment and mitigation as needed under the standard-risk route."};
+ return {title:"Country needed",text:"Enter the country of production to calculate the likely due-diligence route."};
+}
+function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function runCombined(){
+ const productRaw=document.querySelector("#productQ").value;
+ const countryRaw=document.querySelector("#countryQ").value;
+ const size=document.querySelector("#companySize").value;
+ const role=document.querySelector("#role").value;
+ const p=productMatch(productRaw),r=countryRisk(countryRaw),d=deadline(size,p.state),route=dueRoute(r,p.state);
+ const scopeClass=p.state==="likely"||p.state==="added"?"low":p.state==="removed"?"high":"standard";
+ const out=document.querySelector("#combinedResult");
+ out.classList.remove("hidden");
+ out.innerHTML='<div class="result-summary"><div><span class="kicker">Combined result</span><h2>'+esc(productRaw||"Product check")+'</h2><p>'+esc(countryRaw||"No country entered")+' · '+(role==="operator"?"Operator / importer / exporter":role==="trader"?"Trader / downstream business":"Role not confirmed")+'</p></div><a class="btn btn-ghost" href="/due-diligence/">Open workflow</a></div>'+
+ '<div class="result-grid">'+
+ '<article><span class="badge badge-'+scopeClass+'">'+esc(p.title)+'</span><h3>'+esc(p.family)+'</h3><p>'+esc(p.text)+'</p></article>'+
+ '<article><span class="badge badge-'+(r.key==="unknown"?"standard":r.key)+'">'+esc(r.label)+'</span><h3>'+esc(countryRaw||"Country")+'</h3><p>'+esc(r.text)+'</p></article>'+
+ '<article><span class="badge badge-standard">Application date</span><h3>'+esc(d.date)+'</h3><p>'+esc(d.text)+'</p></article>'+
+ '<article><span class="badge badge-'+(r.key==="high"?"high":r.key==="low"?"low":"standard")+'">Due diligence</span><h3>'+esc(route.title)+'</h3><p>'+esc(route.text)+'</p></article>'+
+ '</div>'+
+ '<div class="next-steps"><strong>Recommended next checks</strong><div class="pill-row"><a href="/cn-code/">Confirm CN code</a><a href="/country-risk/">Verify country risk</a><a href="/geolocation/">Prepare geolocation</a><a href="/dds/">DDS / declaration guide</a></div><small>This result is an initial screening, not a legal determination.</small></div>';
+ out.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.querySelector("#combinedBtn").onclick=runCombined;
+["#productQ","#countryQ"].forEach(sel=>document.querySelector(sel).addEventListener("keydown",e=>{if(e.key==="Enter")runCombined()}));
 </script></body></html>
