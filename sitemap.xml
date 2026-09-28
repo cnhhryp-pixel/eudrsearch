@@ -58,4 +58,6 @@
 <url><loc>https://eudrsearch.com/products/plywood/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://eudrsearch.com/products/paper/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://eudrsearch.com/hs-code/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://eudrsearch.com/about/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://eudrsearch.com/sources/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
