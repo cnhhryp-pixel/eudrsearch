@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EUDR Assessment Result | EUDRSearch</title><meta name="description" content="Printable EUDR assessment result generated from the EUDRSearch combined checker."><link rel="canonical" href="https://eudrsearch.com/assessment/"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/styles.css"></head><body>
+<header class="site-header no-print"><a class="brand" href="/"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a><nav><a href="/eudr-checker/">Checker</a><a href="/products/">Products</a><a href="/countries/">Countries</a></nav><button class="btn btn-small" onclick="window.print()">Print / Save PDF</button></header>
+<main class="assessment-page"><section class="assessment-head"><div><span class="kicker">EUDR Assessment Result</span><h1 id="aProduct">Product assessment</h1><p id="aSub" class="hero-copy"></p></div><div class="assessment-meta"><strong>EUDRSearch</strong><span id="aDate"></span><span>Screening report</span></div></section>
+<section class="assessment-summary">
+<div><span>Product family</span><strong id="aFamily">—</strong></div>
+<div><span>Scope signal</span><strong id="aScope">—</strong></div>
+<div><span>Country risk</span><strong id="aRisk">—</strong></div>
+<div><span>Application date</span><strong id="aDeadline">—</strong></div>
+</section>
+<section class="assessment-grid">
+<article><h2>1. Product scope</h2><p id="aScopeText"></p></article>
+<article><h2>2. Country benchmarking</h2><p id="aRiskText"></p></article>
+<article><h2>3. Application timing</h2><p id="aDeadlineText"></p></article>
+<article><h2>4. Due-diligence route</h2><h3 id="aRoute"></h3><p id="aRouteText"></p></article>
+</section>
+<section class="assessment-section"><h2>Recommended next checks</h2><div class="checklist">
+<label><input type="checkbox"> Confirm exact current Annex I CN classification</label>
+<label><input type="checkbox"> Confirm operator / trader role and company size</label>
+<label><input type="checkbox"> Verify current country benchmark before transaction</label>
+<label><input type="checkbox"> Collect supplier, quantity and production-origin information</label>
+<label><input type="checkbox"> Prepare geolocation data where required</label>
+<label><input type="checkbox"> Complete risk assessment / mitigation if applicable</label>
+<label><input type="checkbox"> Prepare DDS / declaration or required downstream reference data</label>
+</div></section>
+<section class="assessment-section disclaimer"><strong>Important</strong><p>This report is an automated screening result, not legal advice or a binding determination of EUDR scope or compliance. Verify the current EU legislation, Annex I classification, official guidance and transaction-specific facts before relying on it.</p></section>
+<div class="assessment-actions no-print"><a class="btn btn-ghost" href="/eudr-checker/">Run another check</a><button class="btn" onclick="window.print()">Print / Save PDF</button></div>
+</main>
+<script>
+const p=new URLSearchParams(location.search);
+const get=(k,f="—")=>p.get(k)||f;
+document.querySelector("#aProduct").textContent=get("product","Product assessment");
+document.querySelector("#aSub").textContent=[get("country","Country not entered"),get("role","Role not confirmed"),get("size","Size not confirmed")].join(" · ");
+document.querySelector("#aFamily").textContent=get("family");
+document.querySelector("#aScope").textContent=get("scope");
+document.querySelector("#aRisk").textContent=get("risk");
+document.querySelector("#aDeadline").textContent=get("date");
+document.querySelector("#aScopeText").textContent=get("scopeText");
+document.querySelector("#aRiskText").textContent=get("riskText");
+document.querySelector("#aDeadlineText").textContent=get("dateText");
+document.querySelector("#aRoute").textContent=get("route");
+document.querySelector("#aRouteText").textContent=get("routeText");
+document.querySelector("#aDate").textContent=new Intl.DateTimeFormat("en-GB",{year:"numeric",month:"short",day:"2-digit"}).format(new Date());
+</script></body></html>
