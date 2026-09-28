@@ -1,0 +1,28 @@
+# EUDRSearch
+
+EUDRSearch is an independent website for EU Deforestation Regulation (EUDR) product screening and compliance preparation.
+
+## Core tools
+- https://eudrsearch.com/eudr-checker/ — combined product, country-risk, company-size and timing checker
+- https://eudrsearch.com/cn-code/ — EUDR CN-code reference pages
+- https://eudrsearch.com/hs-code/ — HS vs CN classification guide
+- https://eudrsearch.com/country-risk/ — EUDR country benchmarking checker
+- https://eudrsearch.com/due-diligence/ — due-diligence workflow
+- https://eudrsearch.com/geolocation/ — geolocation guidance
+- https://eudrsearch.com/dds/ — due-diligence statement guide
+- https://eudrsearch.com/deadlines/ — application dates
+
+## Reference hubs
+- https://eudrsearch.com/products/
+- https://eudrsearch.com/countries/
+- https://eudrsearch.com/faq/
+- https://eudrsearch.com/sources/
+- https://eudrsearch.com/about/
+
+## Primary official sources
+- European Commission EUDR overview: https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en
+- Regulation (EU) 2023/1115: https://eur-lex.europa.eu/eli/reg/2023/1115/oj
+- Delegated Regulation (EU) 2026/2102: https://eur-lex.europa.eu/eli/reg_del/2026/2102/oj
+- Implementing Regulation (EU) 2025/1093: https://eur-lex.europa.eu/eli/reg_impl/2025/1093/oj
+
+EUDRSearch is informational and independent. It is not an EU institution and does not provide legal advice.
