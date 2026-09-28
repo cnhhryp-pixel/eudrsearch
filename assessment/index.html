@@ -1,7 +1,8 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EUDR Assessment Result | EUDRSearch</title><meta name="description" content="Printable EUDR assessment result generated from the EUDRSearch combined checker."><link rel="canonical" href="https://eudrsearch.com/assessment/"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/styles.css"></head><body>
+<title>EUDR Assessment Result | EUDRSearch</title><meta name="description" content="Printable EUDR assessment result generated from the EUDRSearch combined checker."><meta name="robots" content="noindex,follow"><link rel="canonical" href="https://eudrsearch.com/assessment/"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/styles.css"></head><body>
 <header class="site-header no-print"><a class="brand" href="/"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a><nav><a href="/eudr-checker/">Checker</a><a href="/products/">Products</a><a href="/countries/">Countries</a></nav><button class="btn btn-small" onclick="window.print()">Print / Save PDF</button></header>
-<main class="assessment-page"><section class="assessment-head"><div><span class="kicker">EUDR Assessment Result</span><h1 id="aProduct">Product assessment</h1><p id="aSub" class="hero-copy"></p></div><div class="assessment-meta"><strong>EUDRSearch</strong><span id="aDate"></span><span>Screening report</span></div></section>
+<main class="assessment-page"><section class="assessment-head"><div><span class="kicker">EUDR Assessment Result</span><h1 id="aProduct">Product assessment</h1><p id="aSub" class="hero-copy"></p></div><div class="assessment-meta"><strong>EUDRSearch</strong><span id="aReportId">Report —</span><span id="aDate"></span><span>Automated screening report</span></div></section>
+<section class="assessment-verdict"><div><span class="kicker">Assessment overview</span><h2 id="aVerdict">Initial screening result</h2><p id="aVerdictText">Use the sections below to review the product, country benchmark and likely compliance route.</p></div><div id="aStatusPill" class="assessment-status">Review</div></section>
 <section class="assessment-summary">
 <div><span>Product family</span><strong id="aFamily">—</strong></div>
 <div><span>Scope signal</span><strong id="aScope">—</strong></div>
@@ -23,6 +24,11 @@
 <label><input type="checkbox"> Complete risk assessment / mitigation if applicable</label>
 <label><input type="checkbox"> Prepare DDS / declaration or required downstream reference data</label>
 </div></section>
+<section class="assessment-section"><h2>Official references</h2><div class="source-list">
+<a href="https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en" target="_blank" rel="noopener"><strong>European Commission — EUDR overview</strong><span>Application dates, implementation resources and current guidance.</span></a>
+<a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj" target="_blank" rel="noopener"><strong>Regulation (EU) 2023/1115</strong><span>Base EUDR legal text on EUR-Lex.</span></a>
+<a href="https://eur-lex.europa.eu/eli/reg_del/2026/2102/oj" target="_blank" rel="noopener"><strong>Delegated Regulation (EU) 2026/2102</strong><span>2026 Annex I product-scope changes.</span></a>
+</div></section>
 <section class="assessment-section disclaimer"><strong>Important</strong><p>This report is an automated screening result, not legal advice or a binding determination of EUDR scope or compliance. Verify the current EU legislation, Annex I classification, official guidance and transaction-specific facts before relying on it.</p></section>
 <div class="assessment-actions no-print"><a class="btn btn-ghost" href="/eudr-checker/">Run another check</a><button class="btn" onclick="window.print()">Print / Save PDF</button></div>
 </main>
@@ -40,5 +46,17 @@ document.querySelector("#aRiskText").textContent=get("riskText");
 document.querySelector("#aDeadlineText").textContent=get("dateText");
 document.querySelector("#aRoute").textContent=get("route");
 document.querySelector("#aRouteText").textContent=get("routeText");
-document.querySelector("#aDate").textContent=new Intl.DateTimeFormat("en-GB",{year:"numeric",month:"short",day:"2-digit"}).format(new Date());
+const now=new Date();
+document.querySelector("#aDate").textContent="Generated "+new Intl.DateTimeFormat("en-GB",{year:"numeric",month:"short",day:"2-digit"}).format(now);
+const seed=[get("product"),get("country"),get("scope"),get("risk"),get("date")].join("|");
+let h=2166136261;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)}
+document.querySelector("#aReportId").textContent="Report EUDR-"+(h>>>0).toString(16).toUpperCase().padStart(8,"0");
+const scope=get("scope"),risk=get("risk"),route=get("route");
+let verdict="Further verification recommended",verdictText="Confirm the exact Annex I CN classification before relying on this screening result.",status="Review";
+if(scope.toLowerCase().includes("removed")){verdict="Matched a category removed from current scope";verdictText="The product matched a category removed by the 2026 scope update. Confirm the exact current CN classification.";status="Scope changed"}
+else if(scope.toLowerCase().includes("newly added")){verdict="Newly added EUDR product";verdictText="The product matched a 2026 addition with the special application date shown below.";status="Added 2026"}
+else if(scope.toLowerCase().includes("potential")){verdict=risk==="Low risk"?"Potentially in scope — low-risk origin":"Potentially in scope — due diligence required";verdictText=route||"Proceed through the applicable due-diligence workflow after confirming the exact CN code.";status=risk||"Review"}
+document.querySelector("#aVerdict").textContent=verdict;
+document.querySelector("#aVerdictText").textContent=verdictText;
+document.querySelector("#aStatusPill").textContent=status;
 </script></body></html>
