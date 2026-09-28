@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EUDR Search — EU Deforestation Regulation Product & Compliance Checker</title>
+  <meta name="description" content="Search EUDR commodities, product scope, obligations and key compliance dates. Free static EUDR checker for importers, exporters and supply-chain teams.">
+  <link rel="canonical" href="https://eudrsearch.com/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <meta property="og:title" content="EUDR Search — Product & Compliance Checker">
+  <meta property="og:description" content="Check EUDR scope, commodities, obligations and application dates.">
+  <meta property="og:url" content="https://eudrsearch.com/">
+  <meta property="og:type" content="website">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="/" aria-label="EUDR Search home"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a>
+  <nav><a href="#checker">Checker</a><a href="#commodities">Commodities</a><a href="#workflow">Workflow</a><a href="/guides/eudr-requirements.html">Guide</a></nav>
+  <a class="btn btn-small" href="#checker">Check a product</a>
+</header>
+
+<main>
+<section class="hero">
+  <div class="eyebrow">EU Deforestation Regulation · Regulation (EU) 2023/1115</div>
+  <h1>Search EUDR scope.<br><span>Know what to do next.</span></h1>
+  <p class="hero-copy">A practical EUDR search and compliance workspace for importers, exporters, manufacturers and supply-chain teams.</p>
+  <div class="hero-actions"><a class="btn" href="#checker">Start EUDR check</a><a class="btn btn-ghost" href="#workflow">View compliance workflow</a></div>
+  <div class="date-strip">
+    <div><strong>30 Dec 2026</strong><span>Application for large & medium operators and specified operators</span></div>
+    <div><strong>30 Jun 2027</strong><span>Application for other micro & small operators</span></div>
+    <div><strong>7</strong><span>Core commodities covered by EUDR</span></div>
+  </div>
+</section>
+
+<section id="checker" class="section checker-wrap">
+  <div class="section-head"><div><span class="kicker">Free tool</span><h2>EUDR Product Scope Checker</h2></div><p>Search by commodity, product name or common CN/HS heading. Results are an initial screening, not a substitute for checking the current Annex I.</p></div>
+  <div class="checker">
+    <div class="search-row"><input id="q" autocomplete="off" placeholder="Try: coffee, chocolate, timber, 1806, rubber…" aria-label="Search product"><button id="searchBtn" class="btn">Search</button></div>
+    <div id="suggestions" class="chips"></div>
+    <div id="result" class="result result-empty">
+      <div class="result-icon">⌕</div><div><strong>Enter a product, commodity or code</strong><p>We’ll show the likely EUDR commodity family, common scope examples and the next verification step.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="commodities" class="section">
+  <div class="section-head"><div><span class="kicker">Scope overview</span><h2>Seven EUDR commodity families</h2></div><p>Coverage is determined by the products listed in Annex I, not by commodity name alone.</p></div>
+  <div class="grid commodity-grid">
+    <article><span>01</span><h3>Cattle</h3><p>Selected cattle products and certain derived products.</p></article>
+    <article><span>02</span><h3>Cocoa</h3><p>Cocoa beans, paste, butter, powder, chocolate and listed derivatives.</p></article>
+    <article><span>03</span><h3>Coffee</h3><p>Coffee products, including newly updated product categories.</p></article>
+    <article><span>04</span><h3>Oil palm</h3><p>Palm oil and listed derivatives in the current Annex I.</p></article>
+    <article><span>05</span><h3>Rubber</h3><p>Natural rubber and selected derived rubber products.</p></article>
+    <article><span>06</span><h3>Soya</h3><p>Soya beans, flour, meal, oil and listed derivatives.</p></article>
+    <article><span>07</span><h3>Wood</h3><p>Wood, furniture, paper and other listed wood-derived products.</p></article>
+  </div>
+</section>
+
+<section id="workflow" class="section alt">
+  <div class="section-head"><div><span class="kicker">Practical workflow</span><h2>From product screening to due diligence</h2></div></div>
+  <div class="steps">
+    <div><b>1</b><h3>Confirm scope</h3><p>Match the product against the current Annex I CN classification.</p></div>
+    <div><b>2</b><h3>Collect origin data</h3><p>Gather supplier, production, quantity and geolocation information.</p></div>
+    <div><b>3</b><h3>Assess risk</h3><p>Evaluate deforestation, legality and supply-chain risk using required evidence.</p></div>
+    <div><b>4</b><h3>Mitigate when needed</h3><p>Obtain additional information or take proportionate mitigation measures.</p></div>
+    <div><b>5</b><h3>Submit / retain evidence</h3><p>Prepare the required EUDR declaration or due-diligence record and retain supporting evidence.</p></div>
+  </div>
+</section>
+
+<section class="section cta">
+  <span class="kicker">Built for real trade workflows</span>
+  <h2>Start with the product. Build the evidence trail.</h2>
+  <p>EUDRSearch is being developed as a focused toolkit for product scope checks, due-diligence preparation and practical compliance guidance.</p>
+  <a class="btn" href="#checker">Check a product now</a>
+</section>
+</main>
+
+<footer>
+  <div><a class="brand" href="/"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a><p>Independent EUDR research and compliance tools.</p></div>
+  <div><strong>Tools</strong><a href="#checker">Product checker</a><a href="#workflow">Compliance workflow</a></div>
+  <div><strong>Resources</strong><a href="/guides/eudr-requirements.html">EUDR requirements</a><a href="https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en" rel="noopener">European Commission</a></div>
+  <div><strong>Legal</strong><p>Informational only. Always verify against current EU legislation and official guidance.</p></div>
+</footer>
+<script src="/app.js"></script>
+</body></html>
