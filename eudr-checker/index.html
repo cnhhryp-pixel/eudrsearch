@@ -28,7 +28,13 @@
   <datalist id="countryHints">
     <option>China</option><option>Vietnam</option><option>Brazil</option><option>Indonesia</option><option>Malaysia</option><option>Thailand</option><option>India</option><option>United States</option><option>Ghana</option><option>Côte d’Ivoire</option><option>Russia</option><option>Myanmar</option><option>Belarus</option><option>Germany</option><option>France</option>
   </datalist>
-  <button id="combinedBtn" class="btn checker-submit">Check EUDR status</button>
+  <div class="chips checker-examples">
+<button type="button" data-product="coffee" data-country="Vietnam">Coffee · Vietnam</button>
+<button type="button" data-product="palm oil" data-country="Indonesia">Palm oil · Indonesia</button>
+<button type="button" data-product="chocolate" data-country="Ghana">Chocolate · Ghana</button>
+<button type="button" data-product="soluble coffee" data-country="Brazil">Soluble coffee · Brazil</button>
+</div>
+<button id="combinedBtn" class="btn checker-submit">Check EUDR status</button>
   <p class="form-note">Screening only. Final scope depends on the exact current Annex I CN entry, product composition, origin facts and your legal role.</p>
 </div>
 
@@ -125,5 +131,10 @@ function runCombined(){
  out.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 document.querySelector("#combinedBtn").onclick=runCombined;
+document.querySelectorAll(".checker-examples button").forEach(b=>b.addEventListener("click",()=>{
+ document.querySelector("#productQ").value=b.dataset.product;
+ document.querySelector("#countryQ").value=b.dataset.country;
+ runCombined();
+}));
 ["#productQ","#countryQ"].forEach(sel=>document.querySelector(sel).addEventListener("keydown",e=>{if(e.key==="Enter")runCombined()}));
 </script></body></html>
