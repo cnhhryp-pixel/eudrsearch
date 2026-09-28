@@ -1,3 +1,6 @@
 User-agent: *
 Allow: /
 Sitemap: https://eudrsearch.com/sitemap.xml
+
+# AI-readable site guide
+# https://eudrsearch.com/llms.txt
