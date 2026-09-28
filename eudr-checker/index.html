@@ -107,7 +107,7 @@ function runCombined(){
  const scopeClass=p.state==="likely"||p.state==="added"?"low":p.state==="removed"?"high":"standard";
  const out=document.querySelector("#combinedResult");
  out.classList.remove("hidden");
- out.innerHTML='<div class="result-summary"><div><span class="kicker">Combined result</span><h2>'+esc(productRaw||"Product check")+'</h2><p>'+esc(countryRaw||"No country entered")+' · '+(role==="operator"?"Operator / importer / exporter":role==="trader"?"Trader / downstream business":"Role not confirmed")+'</p></div><a class="btn btn-ghost" href="/due-diligence/">Open workflow</a></div>'+
+ out.innerHTML='<div class="result-summary"><div><span class="kicker">Combined result</span><h2>'+esc(productRaw||"Product check")+'</h2><p>'+esc(countryRaw||"No country entered")+' · '+(role==="operator"?"Operator / importer / exporter":role==="trader"?"Trader / downstream business":"Role not confirmed")+'</p></div><div class="result-actions"><a class="btn btn-ghost" href="/due-diligence/">Open workflow</a><a class="btn" id="assessmentLink" href="#">Open assessment result</a></div></div>'+
  '<div class="result-grid">'+
  '<article><span class="badge badge-'+scopeClass+'">'+esc(p.title)+'</span><h3>'+esc(p.family)+'</h3><p>'+esc(p.text)+'</p></article>'+
  '<article><span class="badge badge-'+(r.key==="unknown"?"standard":r.key)+'">'+esc(r.label)+'</span><h3>'+esc(countryRaw||"Country")+'</h3><p>'+esc(r.text)+'</p></article>'+
@@ -115,6 +115,13 @@ function runCombined(){
  '<article><span class="badge badge-'+(r.key==="high"?"high":r.key==="low"?"low":"standard")+'">Due diligence</span><h3>'+esc(route.title)+'</h3><p>'+esc(route.text)+'</p></article>'+
  '</div>'+
  '<div class="next-steps"><strong>Recommended next checks</strong><div class="pill-row"><a href="/cn-code/">Confirm CN code</a><a href="/country-risk/">Verify country risk</a><a href="/geolocation/">Prepare geolocation</a><a href="/dds/">DDS / declaration guide</a></div><small>This result is an initial screening, not a legal determination.</small></div>';
+ const params=new URLSearchParams({
+   product:productRaw,country:countryRaw,size:size,role:role,
+   family:p.family,scope:p.title,scopeText:p.text,risk:r.label,riskText:r.text,
+   date:d.date,dateText:d.text,route:route.title,routeText:route.text
+ });
+ const assessment=document.querySelector("#assessmentLink");
+ if(assessment) assessment.href="/assessment/?"+params.toString();
  out.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 document.querySelector("#combinedBtn").onclick=runCombined;
