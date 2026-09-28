@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EUDR Product Checker | EUDRSearch</title><meta name="description" content="Free EUDR product scope checker. Search by product, commodity or CN/HS heading and identify the next scope-verification step."><link rel="canonical" href="https://eudrsearch.com/eudr-checker/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css"></head><body><header class="site-header">
+<a class="brand" href="/" aria-label="EUDR Search home"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a>
+<nav><a href="/eudr-checker/">Checker</a><a href="/cn-code/">CN/HS</a><a href="/country-risk/">Country risk</a><a href="/due-diligence/">Due diligence</a><a href="/guides/eudr-requirements.html">Guides</a></nav>
+<a class="btn btn-small" href="/eudr-checker/">Check a product</a>
+</header><main>
+<section class="page-hero"><span class="kicker">Free EUDR tool</span><h1>EUDR Product Checker</h1><p class="hero-copy">Screen a product by name, commodity or common CN/HS heading before you move into full due diligence.</p></section><section class="section narrow-top"><div class="checker"><div class="search-row"><input id="fullQ" placeholder="e.g. chocolate, 1806, timber, 4001, palm oil"><button id="fullSearch" class="btn">Check scope</button></div><div id="fullResult" class="lookup-results"><div class="notice"><strong>What this tool does</strong><p>It gives an initial scope signal. The legally decisive step is checking the exact product against the current Annex I.</p></div></div></div>
+<div class="content-grid"><article class="content-card"><h2>1. Identify the exact product</h2><p>Use the commercial description together with the customs classification. Similar products can have different EUDR treatment depending on their CN code and material composition.</p></article><article class="content-card"><h2>2. Confirm the commodity family</h2><p>EUDR covers cattle, cocoa, coffee, oil palm, rubber, soya and wood, plus specified derived products.</p></article><article class="content-card"><h2>3. Check timing</h2><p>The main application dates are 30 December 2026 and 30 June 2027, with separate timing for products newly added to scope in 2026.</p></article></div></section></main><footer>
+<div><a class="brand" href="/"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a><p>Independent EUDR research and compliance tools.</p></div>
+<div><strong>Tools</strong><a href="/eudr-checker/">Product checker</a><a href="/cn-code/">CN / HS search</a><a href="/country-risk/">Country risk</a><a href="/deadlines/">Deadlines</a></div>
+<div><strong>Compliance</strong><a href="/due-diligence/">Due diligence</a><a href="/geolocation/">Geolocation</a><a href="/dds/">DDS guide</a><a href="/guides/eudr-requirements.html">Requirements guide</a></div>
+<div><strong>Legal</strong><p>Informational only. Verify current EU legislation and official guidance before relying on a result.</p></div>
+</footer><script>
+const rows=[
+["cattle","Cattle","Potential EUDR scope. Confirm the exact CN code in Annex I."],
+["beef","Cattle","Potential EUDR scope. Confirm the exact CN code in Annex I."],
+["cocoa","Cocoa","Cocoa and listed cocoa derivatives are core EUDR products."],
+["chocolate","Cocoa","Chocolate under heading 1806 is an EUDR product category."],
+["coffee","Coffee","Coffee products can fall within EUDR scope. Check the current Annex I."],
+["palm","Oil palm","Palm oil and listed derivatives can fall within EUDR scope."],
+["rubber","Rubber","Natural rubber and listed derivatives can fall within EUDR scope."],
+["soya","Soya","Soya and listed derivatives can fall within EUDR scope."],
+["soy","Soya","Soya and listed derivatives can fall within EUDR scope."],
+["wood","Wood","Wood and many listed derived products can fall within EUDR scope."],
+["timber","Wood","Wood and many listed derived products can fall within EUDR scope."],
+["furniture","Wood","Some wooden furniture categories fall within EUDR scope. Confirm the CN code."],
+["1806","Cocoa","CN 1806 covers chocolate and other food preparations containing cocoa."],
+["0901","Coffee","CN 0901 covers coffee, whether or not roasted or decaffeinated, and related products."],
+["1201","Soya","CN 1201 concerns soya beans; verify the latest Annex I wording and exclusions."],
+["1507","Soya","CN 1507 concerns soya-bean oil and its fractions."],
+["1511","Oil palm","CN 1511 concerns palm oil and its fractions."],
+["4001","Rubber","CN 4001 concerns natural rubber in primary forms or plates, sheets or strip."],
+["4403","Wood","CN 4403 concerns wood in the rough."],
+["4407","Wood","CN 4407 concerns wood sawn or chipped lengthwise above specified thickness."],
+["9403","Wood","Some wooden furniture under 9403 is covered; verify the exact subheading."]
+];
+const q=document.querySelector("#fullQ"),out=document.querySelector("#fullResult");
+function run(){const t=q.value.trim().toLowerCase();if(!t){out.innerHTML="<strong>Enter a product or code.</strong>";return}
+const hits=rows.filter(r=>t.includes(r[0])||r[0].includes(t));
+if(!hits.length){out.innerHTML="<strong>No quick match.</strong><p>No quick match does not prove the product is outside EUDR. Check the exact current Annex I CN entry.</p>";return}
+out.innerHTML=hits.slice(0,6).map(r=>'<div class="lookup-row"><span class="badge badge-low">'+r[1]+'</span><div><strong>'+r[0].toUpperCase()+'</strong><p>'+r[2]+'</p></div></div>').join("")}
+document.querySelector("#fullSearch").onclick=run;q.addEventListener("keydown",e=>{if(e.key==="Enter")run()});
+</script></body></html>
