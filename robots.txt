@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /preview-assessment.html
+Disallow: /preview-checker.html
+Disallow: /preview.html
 Sitemap: https://eudrsearch.com/sitemap.xml
 
 # AI-readable site guide
