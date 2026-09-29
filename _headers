@@ -11,3 +11,12 @@
 
 /favicon.svg
   Cache-Control: public, max-age=86400
+
+/preview.html
+  X-Robots-Tag: noindex, nofollow
+
+/preview-checker.html
+  X-Robots-Tag: noindex, nofollow
+
+/preview-assessment.html
+  X-Robots-Tag: noindex, nofollow
