@@ -44,14 +44,14 @@
 </section>
 
 <section id="checker" class="section checker-wrap">
-  <div class="section-head"><div><span class="kicker">Free tool</span><h2>EUDR Product Scope Checker</h2></div><p>Search by commodity, product name or common CN/HS heading. Results are an initial screening, not a substitute for checking the current Annex I.</p></div>
-  <div class="checker">
-    <div class="search-row"><input id="q" autocomplete="off" placeholder="Try: coffee, chocolate, timber, 1806, rubber…" aria-label="Search product"><button id="searchBtn" class="btn">Search</button></div>
-    <div id="suggestions" class="chips"></div>
-    <div id="result" class="result result-empty">
-      <div class="result-icon">⌕</div><div><strong>Enter a product, commodity or code</strong><p>We’ll show the likely EUDR commodity family, common scope examples and the next verification step.</p></div>
+  <div class="section-head"><div><span class="kicker">Quick search</span><h2>Start with a product or CN code</h2></div><p>Use one search entry point. Your query opens the full Combined Checker with country, company size, timing and due-diligence logic.</p></div>
+  <form class="checker quick-checker" action="/eudr-checker/" method="get">
+    <div class="search-row">
+      <input name="product" autocomplete="off" placeholder="Try: wooden pallet, MDF, 4819, soluble coffee…" aria-label="Product or CN code">
+      <button class="btn" type="submit">Check EUDR status</button>
     </div>
-  </div>
+    <div class="chips"><a href="/eudr-checker/?product=wooden%20pallet">Wooden pallet</a><a href="/eudr-checker/?product=cardboard%20box">Cardboard box</a><a href="/eudr-checker/?product=MDF">MDF</a><a href="/eudr-checker/?product=21011100">2101 11 00</a></div>
+  </form>
 </section>
 
 <section id="commodities" class="section">
@@ -157,5 +157,4 @@
   <div><strong>Compliance</strong><a href="/due-diligence/">Due diligence</a><a href="/geolocation/">Geolocation</a><a href="/dds/">DDS guide</a><a href="/countries/">Country guides</a><a href="/guides/">Guides</a><a href="/faq/">FAQ</a></div>
   <div><strong>Trust</strong><a href="/about/">About</a><a href="/sources/">Official sources</a><a href="/faq/">FAQ</a><p>Independent and informational only.</p></div>
 </footer>
-<script src="/app.js"></script>
 </body></html>
