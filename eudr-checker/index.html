@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EUDR Combined Checker — Product, Country & Company Size | EUDRSearch</title>
 <meta name="description" content="Free EUDR combined checker: screen a product or CN/HS code, country risk, company size, application date and due-diligence route in one workflow.">
-<link rel="canonical" href="https://eudrsearch.com/eudr-checker/"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/styles.css"></head><body>
+<link rel="canonical" href="https://eudrsearch.com/eudr-checker/"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/styles.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"EUDR Combined Checker","url":"https://eudrsearch.com/eudr-checker/","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"Free EUDR product, CN code, country risk, company-size and application-date screening tool.","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"EUDRSearch","url":"https://eudrsearch.com/"}}</script></head><body>
 <header class="site-header"><a class="brand" href="/"><span class="brand-mark">E</span><span>EUDR<span>Search</span></span></a>
 <nav><a href="/eudr-checker/">Checker</a><a href="/products/">Products</a><a href="/cn-code/">CN/HS</a><a href="/country-risk/">Country Risk</a><a href="/countries/">Countries</a></nav>
 <a class="btn btn-small" href="#combined">Run check</a></header>
@@ -60,6 +60,7 @@
 <script>
 const lowCountries=["Afghanistan","Albania","Algeria","Andorra","Antigua and Barbuda","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belgium","Bhutan","Bosnia and Herzegovina","Brunei Darussalam","Bulgaria","Burundi","Cabo Verde","Canada","Central African Republic","Chile","China","Comoros","Congo","Costa Rica","Croatia","Cuba","Cyprus","Czechia","Denmark","Djibouti","Dominica","Dominican Republic","Egypt","Estonia","Eswatini","Fiji","Finland","France","Gabon","Georgia","Germany","Ghana","Greece","Grenada","Guyana","Hungary","Iceland","India","Iran","Iraq","Ireland","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Maldives","Mali","Malta","Marshall Islands","Mauritius","Micronesia","Monaco","Mongolia","Montenegro","Morocco","Nauru","Nepal","Netherlands","New Zealand","North Macedonia","Norway","Oman","Palau","Palestine","Papua New Guinea","Philippines","Poland","Portugal","Qatar","Republic of Korea","Moldova","Romania","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","São Tomé and Príncipe","Saudi Arabia","Serbia","Seychelles","Singapore","Slovakia","Slovenia","Solomon Islands","South Africa","South Sudan","Spain","Sri Lanka","Suriname","Sweden","Switzerland","Syria","Tajikistan","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Türkiye","Turkmenistan","Tuvalu","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vietnam","Yemen"].map(v=>v.toLowerCase());
 const highCountries=["Belarus","Democratic People's Republic of Korea","North Korea","Myanmar","Russian Federation","Russia"].map(v=>v.toLowerCase());
+const standardCountries=["Argentina","Benin","Bolivia","Botswana","Brazil","Burkina Faso","Cambodia","Cameroon","Chad","Colombia","Côte d’Ivoire","Cote d'Ivoire","Democratic Republic of the Congo","Ecuador","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Gambia","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Israel","Liberia","Malawi","Malaysia","Mexico","Mozambique","Namibia","Nicaragua","Niger","Nigeria","Pakistan","Panama","Paraguay","Peru","Senegal","Sierra Leone","Somalia","Sudan","Tanzania","Uganda","Venezuela","Zambia","Zimbabwe"].map(v=>v.toLowerCase());
 const aliases={"viet nam":"vietnam","usa":"united states","u.s.":"united states","uk":"united kingdom","south korea":"republic of korea","dprk":"north korea","russian federation":"russia","lao pdr":"laos","ivory coast":"côte d’ivoire","cote d'ivoire":"côte d’ivoire","cote divoire":"côte d’ivoire"};
 function norm(v){v=(v||"").trim().toLowerCase();return aliases[v]||v}
 function countryRisk(raw){
@@ -67,7 +68,8 @@ function countryRisk(raw){
  if(!v) return {key:"unknown",label:"Country needed",text:"Enter the country of production to calculate the benchmarking route."};
  if(highCountries.includes(v)) return {key:"high",label:"High risk",text:"The country appears on the current EU high-risk list."};
  if(lowCountries.includes(v)) return {key:"low",label:"Low risk",text:"The country appears on the current EU low-risk list."};
- return {key:"standard",label:"Standard risk",text:"This country is not on the current low/high lists, so standard risk applies if the country name is entered correctly."};
+ if(standardCountries.includes(v)) return {key:"standard",label:"Standard risk",text:"The country is not listed as low or high risk under the current EU benchmarking regulation, so standard risk applies."};
+ return {key:"unknown",label:"Country not recognized",text:"The country name was not recognized confidently. Check the spelling or select a common country name before relying on the benchmarking result."};
 }
 const products=[
  {keys:["bamboo","bamboo furniture","rattan","rattan furniture","wicker rattan"],family:"Wood",state:"excluded",title:"Material excluded",text:"Wood-product entries do not apply when the product is made of bamboo, rattan or other excluded materials of a woody nature. Verify composition and the exact CN entry."},
@@ -154,6 +156,11 @@ function runCombined(){
  if(assessment) assessment.href="/assessment/?"+params.toString();
  out.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
+const initialParams=new URLSearchParams(location.search);
+const initialProduct=initialParams.get("product");
+const initialCountry=initialParams.get("country");
+if(initialProduct) document.querySelector("#productQ").value=initialProduct;
+if(initialCountry) document.querySelector("#countryQ").value=initialCountry;
 document.querySelector("#combinedBtn").onclick=runCombined;
 document.querySelectorAll(".checker-examples button").forEach(b=>b.addEventListener("click",()=>{
  document.querySelector("#productQ").value=b.dataset.product;
