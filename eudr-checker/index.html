@@ -12,7 +12,7 @@
 <section id="combined" class="section narrow-top">
 <div class="checker checker-pro">
   <div class="form-grid">
-    <label><span>Product, CN or HS code</span><input id="productQ" placeholder="e.g. chocolate, 1806, 0901, soluble coffee"></label>
+    <label><span>Product, CN or HS code</span><input id="productQ" placeholder="e.g. chocolate, bamboo furniture, 21011100, palm soap"></label>
     <label><span>Country of production</span><input id="countryQ" list="countryHints" placeholder="e.g. China, Brazil, Vietnam"></label>
     <label><span>Company / operator size</span><select id="companySize">
       <option value="large">Large or medium operator</option>
@@ -33,6 +33,8 @@
 <button type="button" data-product="palm oil" data-country="Indonesia">Palm oil · Indonesia</button>
 <button type="button" data-product="chocolate" data-country="Ghana">Chocolate · Ghana</button>
 <button type="button" data-product="soluble coffee" data-country="Brazil">Soluble coffee · Brazil</button>
+<button type="button" data-product="bamboo furniture" data-country="China">Bamboo furniture · China</button>
+<button type="button" data-product="palm soap" data-country="Indonesia">Palm soap · Indonesia</button>
 </div>
 <button id="combinedBtn" class="btn checker-submit">Check EUDR status</button>
   <p class="form-note">Screening only. Final scope depends on the exact current Annex I CN entry, product composition, origin facts and your legal role.</p>
@@ -68,35 +70,53 @@ function countryRisk(raw){
  return {key:"standard",label:"Standard risk",text:"This country is not on the current low/high lists, so standard risk applies if the country name is entered correctly."};
 }
 const products=[
- {keys:["soluble coffee","instant coffee","210111","2101 11"],family:"Coffee",state:"added",title:"Newly added product",text:"Soluble coffee was added by the 2026 scope update and becomes subject to EUDR from 30 December 2027."},
- {keys:["frozen cattle tongue","frozen beef tongue"],family:"Cattle",state:"added",title:"Newly added product",text:"Frozen cattle tongues were added by the 2026 scope update and become subject to EUDR from 30 December 2027."},
+ {keys:["bamboo","bamboo furniture","rattan","rattan furniture","wicker rattan"],family:"Wood",state:"excluded",title:"Material excluded",text:"Wood-product entries do not apply when the product is made of bamboo, rattan or other excluded materials of a woody nature. Verify composition and the exact CN entry."},
+ {keys:["synthetic rubber","synthetic latex"],family:"Rubber",state:"excluded",title:"Commodity excluded",text:"EUDR rubber scope applies to rubber from Hevea brasiliensis, not synthetic rubber."},
+ {keys:["balata","gutta-percha","gutta percha","guayule","chicle"],family:"Rubber",state:"excluded",title:"Commodity excluded",text:"These natural gums are produced from species other than Hevea brasiliensis and are outside the EUDR rubber commodity definition."},
+ {keys:["babassu oil","babassu"],family:"Oil palm",state:"excluded",title:"Commodity excluded",text:"EUDR oil-palm scope applies to Elaeis spp.; babassu oil from Attalea spp. is not an EUDR oil-palm commodity."},
+ {keys:["buffalo","buffalo meat","bison","bison meat"],family:"Cattle",state:"excluded",title:"Species excluded",text:"The EUDR cattle definition applies to Bos and specified sub-genera, not buffalo (Syncerus) or bison (Bison)."},
+ {keys:["soluble coffee","instant coffee","21011100","210111","2101 11 00","2101 11"],family:"Coffee",state:"added",title:"Newly added product",text:"Soluble coffee / coffee extracts under 2101 11 00 were added by the 2026 scope update and become subject to EUDR from 30 December 2027."},
+ {keys:["frozen cattle tongue","frozen beef tongue","02062100","0206 21 00"],family:"Cattle",state:"added",title:"Newly added product",text:"Frozen cattle tongues under ex 0206 21 00 were added by the 2026 scope update and become subject to EUDR from 30 December 2027."},
+ {keys:["palm soap","soap made with palm oil","34011100","3401 11 00","340120","3401 20"],family:"Oil palm",state:"added",title:"Newly added palm derivative",text:"Specified soap products containing or made using oil palm were added by the 2026 scope update and become subject to EUDR from 30 December 2027, subject to the exact CN entry and stated exemptions."},
+ {keys:["151620","1516 20","hydrogenated palm oil","hydrogenated palm kernel oil"],family:"Oil palm",state:"added",title:"Newly added palm derivative",text:"Specified hydrogenated or otherwise modified palm/palm-kernel oil products under ex 1516 20 were added with application from 30 December 2027."},
+ {keys:["151800","1518 00","chemically modified palm oil"],family:"Oil palm",state:"added",title:"Newly added palm derivative",text:"Specified chemically modified palm-derived products under ex 1518 00 were added with application from 30 December 2027."},
+ {keys:["152000","1520 00","crude glycerol","glycerol waters","glycerol lyes"],family:"Oil palm",state:"added",title:"Newly added palm derivative",text:"Crude glycerol, glycerol waters and lyes produced using oil palm under ex 1520 00 were added with application from 30 December 2027."},
+ {keys:["291615","2916 15","29161910","2916 19 10","292119","2921 19","29239000","2923 90 00","29241900","2924 19 00","382499","3824 99","390729","3907 29"],family:"Oil palm",state:"added",title:"Newly added palm-derived chemical",text:"This code is among palm-derived chemical entries added by the 2026 Annex I update, generally applying from 30 December 2027 when made using oil palm and subject to stated exemptions."},
  {keys:["cattle leather","beef leather","cattle hide","cattle hides","cattle skin","cattle skins","4101","4104","4107"],family:"Cattle",state:"removed",title:"Removed from scope",text:"Cattle hides, skins and leather were removed by the 2026 product-scope update. Verify the exact current CN entry."},
- {keys:["retreaded tyre","retreaded tire","re-treaded tyre","re-treaded tire"],family:"Rubber",state:"removed",title:"Removed from scope",text:"Re-treaded tyres were removed by the 2026 product-scope update."},
- {keys:["vulcanised rubber","vulcanized rubber","conveyor belt","transmission belt"],family:"Rubber",state:"removed",title:"Removed category",text:"Selected vulcanised-rubber articles and conveyor/transmission belts were removed by the 2026 scope update. Exact classification still matters."},
+ {keys:["retreaded tyre","retreaded tire","re-treaded tyre","re-treaded tire","401211","401212","401213","401219"],family:"Rubber",state:"removed",title:"Removed from scope",text:"Re-treaded tyre categories were removed by the 2026 product-scope update."},
+ {keys:["solid rubber tyre","solid rubber tire","rubber tyre flap","rubber tire flap","40129020","40129090"],family:"Rubber",state:"removed",title:"Removed from scope",text:"Specified solid/cushion tyre and tyre-flap categories were removed by the 2026 scope update."},
+ {keys:["aircraft seat","motor vehicle seat","car seat"],family:"Rubber",state:"removed",title:"Removed from scope",text:"Aircraft and motor-vehicle seat categories were removed from the EUDR product scope in the 2026 update."},
+ {keys:["vulcanised rubber article","vulcanized rubber article","conveyor belt","transmission belt"],family:"Rubber",state:"removed",title:"Removed category",text:"Selected vulcanised-rubber articles and conveyor/transmission belts were removed by the 2026 scope update. Exact classification still matters."},
  {keys:["soybeans for sowing","soya beans for sowing","soybean for sowing","soya for sowing"],family:"Soya",state:"removed",title:"Removed from scope",text:"Soybeans for sowing were removed by the 2026 product-scope update."},
+ {keys:["new rubber tread","rubber tread","40129030","4012 90 30"],family:"Rubber",state:"likely",title:"Potential EUDR match",text:"The updated Annex I limits the relevant ex 4012 entry to specified new rubber tread rather than retreaded tyres generally."},
  {keys:["chocolate","1806","cocoa","cacao","1801","1803","1804","1805"],family:"Cocoa",state:"likely",title:"Potential EUDR match",text:"Cocoa and listed cocoa-derived products are core EUDR product groups."},
  {keys:["coffee","0901"],family:"Coffee",state:"likely",title:"Potential EUDR match",text:"Coffee under the relevant current Annex I entries can fall within EUDR scope."},
- {keys:["palm oil","1511","oil palm"],family:"Oil palm",state:"likely",title:"Potential EUDR match",text:"Palm oil and listed palm-derived products can fall within EUDR scope."},
- {keys:["natural rubber","4001","rubber"],family:"Rubber",state:"likely",title:"Potential EUDR match",text:"Natural rubber and listed derived products can fall within EUDR scope."},
+ {keys:["palm oil","1511","oil palm","palm kernel"],family:"Oil palm",state:"likely",title:"Potential EUDR match",text:"Palm oil and listed palm-derived products can fall within EUDR scope when produced using the relevant oil-palm commodity."},
+ {keys:["natural rubber","4001","rubber"],family:"Rubber",state:"likely",title:"Potential EUDR match",text:"Natural rubber from Hevea brasiliensis and listed derived products can fall within EUDR scope."},
  {keys:["soya","soy","soybean","1201","1507"],family:"Soya",state:"likely",title:"Potential EUDR match",text:"Soya and listed derivatives can fall within EUDR scope."},
- {keys:["wood furniture","furniture","9403","timber","wood","4403","4407","4418","paper"],family:"Wood",state:"likely",title:"Potential EUDR match",text:"Wood and many listed wood-derived products can fall within EUDR scope."},
- {keys:["cattle","beef","0102","0201","0202"],family:"Cattle",state:"likely",title:"Potential EUDR match",text:"Cattle and selected derived products can fall within EUDR scope."}
-];
+ {keys:["wood furniture","furniture","9403","timber","wood","4403","4407","4418","paper"],family:"Wood",state:"likely",title:"Potential EUDR match",text:"Wood and many listed wood-derived products can fall within EUDR scope, excluding products made from bamboo, rattan and other excluded woody materials."},
+ {keys:["cattle","beef","0102","0201","0202"],family:"Cattle",state:"likely",title:"Potential EUDR match",text:"Cattle of the covered Bos groups and selected derived products can fall within EUDR scope."}
+]
 function productMatch(raw){
  const t=(raw||"").trim().toLowerCase();
  if(!t) return {state:"unknown",family:"—",title:"Product needed",text:"Enter a product name or CN/HS code."};
+ if((t.includes("sample")||t.includes("test sample")||t.includes("laboratory sample"))&&!t.includes("commercial sale")) return {state:"conditional",family:"Depends on product",title:"Possible testing/sample exemption",text:"Certain samples and products used for analysis, examination or testing can be outside EUDR when the legal conditions are met. Verify the exact use and disposal/return conditions."};
+ if(t.includes("used ")||t.includes("second-hand")||t.includes("second hand")) return {state:"conditional",family:"Depends on product",title:"Possible used-product exemption",text:"Certain used and second-hand products can be outside EUDR under the 2026 scope clarifications. Verify that the legal exemption conditions are met."};
+ if(t.includes("waste")) return {state:"conditional",family:"Depends on product",title:"Possible waste exemption",text:"Waste as legally defined can be outside relevant Annex I entries. Confirm the waste definition and exact product facts."};
  for(const p of products){if(p.keys.some(k=>t.includes(k)))return p}
  if(t.includes("palm")&&t.includes("derivative")) return {state:"review",family:"Oil palm",title:"Exact code required",text:"Certain palm-oil derivatives were newly added in 2026 and apply from 30 December 2027; others may already be covered. Verify the exact CN code."};
  return {state:"unknown",family:"Unknown",title:"No quick match",text:"No quick match does not prove the product is outside EUDR. Verify the exact current Annex I CN entry."};
 }
 function deadline(size,state){
  if(state==="added") return {date:"30 Dec 2027",text:"Special application date for products newly added by the 2026 product-scope update."};
- if(state==="removed") return {date:"No main EUDR date",text:"This matched a category removed in the 2026 update; verify the exact current classification."};
+ if(state==="removed"||state==="excluded") return {date:"Not applicable if confirmed",text:"This matched a removed or excluded category; verify the exact product, material/species and current CN classification."};
+ if(state==="conditional") return {date:"Depends on exemption",text:"A possible exemption matched. Confirm the legal conditions before treating the product as outside EUDR."};
  if(size==="small") return {date:"30 Jun 2027",text:"Current application date for other micro and small operators."};
  return {date:"30 Dec 2026",text:size==="small-eutr"?"Current application date for micro/small operators already covered by the former EUTR.":"Current application date for large and medium operators."};
 }
 function dueRoute(risk,state){
- if(state==="removed") return {title:"Verify current scope first",text:"The product matched a removed category. Confirm the exact CN code before building an EUDR due-diligence file."};
+ if(state==="removed"||state==="excluded") return {title:"Verify exclusion before proceeding",text:"The product matched a removed or excluded category. Confirm exact CN classification, material/species and transaction facts before relying on the exclusion."};
+ if(state==="conditional") return {title:"Verify exemption conditions",text:"A possible exemption matched. Confirm the legal conditions and keep evidence supporting the exemption."};
  if(state==="unknown"||state==="review") return {title:"Scope verification first",text:"Confirm Annex I coverage before deciding the due-diligence route."};
  if(risk.key==="low") return {title:"Simplified due diligence may apply",text:"Article 13 may remove the Article 10/11 risk-assessment and mitigation steps when its conditions are met. Article 9 information collection still applies, and known compliance/circumvention risks can trigger the full process."};
  if(risk.key==="high") return {title:"Full due diligence + enhanced scrutiny",text:"Prepare information collection, risk assessment and mitigation as needed. High-risk origins are subject to enhanced competent-authority scrutiny."};
@@ -110,7 +130,7 @@ function runCombined(){
  const size=document.querySelector("#companySize").value;
  const role=document.querySelector("#role").value;
  const p=productMatch(productRaw),r=countryRisk(countryRaw),d=deadline(size,p.state),route=dueRoute(r,p.state);
- const scopeClass=p.state==="likely"||p.state==="added"?"low":p.state==="removed"?"high":"standard";
+ const scopeClass=p.state==="likely"||p.state==="added"?"low":p.state==="removed"||p.state==="excluded"?"high":"standard";
  const out=document.querySelector("#combinedResult");
  out.classList.remove("hidden");
  out.innerHTML='<div class="result-summary"><div><span class="kicker">Combined result</span><h2>'+esc(productRaw||"Product check")+'</h2><p>'+esc(countryRaw||"No country entered")+' · '+(role==="operator"?"Operator / importer / exporter":role==="trader"?"Trader / downstream business":"Role not confirmed")+'</p></div><div class="result-actions"><a class="btn btn-ghost" href="/due-diligence/">Open workflow</a><a class="btn" id="assessmentLink" href="#">Open assessment result</a></div></div>'+
